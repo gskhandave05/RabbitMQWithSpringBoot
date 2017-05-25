@@ -4,6 +4,7 @@
 package com.gk.converters;
 
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
 import com.gk.entities.Product;
 import com.gk.model.ProductBean;
@@ -12,6 +13,7 @@ import com.gk.model.ProductBean;
  * @author gauravkhandave
  *
  */
+@Component
 public class ProductToProductBean implements Converter<Product,ProductBean>{
 
 	@Override

@@ -3,7 +3,6 @@
  */
 package com.gk.servicesimpl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,10 +13,10 @@ import org.springframework.stereotype.Service;
 
 import com.gk.converters.ProductBeanToProduct;
 import com.gk.entities.Product;
+import com.gk.maindriver.RabbitMQSpringBootApplication;
 import com.gk.model.ProductBean;
 import com.gk.repository.ProductRepository;
 import com.gk.services.ProductService;
-import com.gk.maindriver.RabbitMQSpringBootApplication;
 
 /**
  * @author gauravkhandave
@@ -39,12 +38,8 @@ public class ProductServicesImpl implements ProductService{
 	    }
 	
 	@Override
-	public List<Product> listAll() {
-		List<Product> list = new ArrayList<Product>();
-		for(Product product: productRepository.findAll()){
-			list.add(product);
-		}
-		return list;		
+	public List<Product> listAll() {		
+		return productRepository.findAll();		
 	}
 
 	@Override

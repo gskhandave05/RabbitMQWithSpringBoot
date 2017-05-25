@@ -5,10 +5,13 @@ package com.gk.model;
 
 import java.math.BigDecimal;
 
+import org.springframework.stereotype.Component;
+
 /**
  * @author gauravkhandave
  *
  */
+@Component
 public class ProductBean {
 	private Long id;
     private String description;

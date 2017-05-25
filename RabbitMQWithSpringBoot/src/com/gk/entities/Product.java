@@ -1,20 +1,24 @@
 package com.gk.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import java.io.Serializable;
 import java.math.BigDecimal;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * 
  * @author gauravkhandave
  *
  */
-@Entity
-public class Product {
+@Document(collection = "product")
+public class Product implements Serializable{
 
-    @Id
-    @GeneratedValue
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Id
     private Long id;
     private String description;
     private BigDecimal price;

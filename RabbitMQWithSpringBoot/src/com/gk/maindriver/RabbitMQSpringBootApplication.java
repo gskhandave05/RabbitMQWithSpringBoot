@@ -7,8 +7,12 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.gk.listener.ProductMessageListener;
 
@@ -21,6 +25,15 @@ import com.gk.listener.ProductMessageListener;
  *
  */
 @SpringBootApplication
+@EnableMongoRepositories("com.gk.repository")
+@ComponentScan("com.gk.listener")
+@ComponentScan("com.gk.converters")
+@ComponentScan("com.gk.entities")
+@ComponentScan("com.gk.model")
+@ComponentScan("com.gk.controllers")
+@ComponentScan("com.gk.servicesImpl")
+@EnableAutoConfiguration
+@EnableWebMvc
 public class RabbitMQSpringBootApplication {
 	
 	public final static String GSK_MESSAGE_QUEUE = "gsk-message-queue";
@@ -41,6 +54,11 @@ public class RabbitMQSpringBootApplication {
 	}
 
 	@Bean
+	MessageListenerAdapter listenerAdapter(ProductMessageListener receiver) {
+		return new MessageListenerAdapter(receiver, "receiveMessage");
+	}
+	
+	@Bean
 	SimpleMessageListenerContainer container(ConnectionFactory connectionFactory,
 	MessageListenerAdapter listenerAdapter) {
 		SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
@@ -48,11 +66,6 @@ public class RabbitMQSpringBootApplication {
 		container.setQueueNames(GSK_MESSAGE_QUEUE);
 		container.setMessageListener(listenerAdapter);
 		return container;
-	}
-
-	@Bean
-	MessageListenerAdapter listenerAdapter(ProductMessageListener receiver) {
-		return new MessageListenerAdapter(receiver, "receiveMessage");
 	}
 
 	public static void main(String[] args) {
